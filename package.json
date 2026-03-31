@@ -1,0 +1,24 @@
+{
+  "name": "comark-streaming-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@comark/vue": "file:./vendor/packages/comark-vue",
+    "@shikijs/langs": "^4.0.2",
+    "@shikijs/primitive": "^4.0.2",
+    "@shikijs/themes": "^4.0.2",
+    "comark": "file:./vendor/packages/comark",
+    "shiki": "^3.23.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "sass-embedded": "^1.98.0",
+    "vite": "^5.0.0"
+  }
+}
