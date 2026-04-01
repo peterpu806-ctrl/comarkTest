@@ -352,15 +352,8 @@ export const ComarkRenderer: ComarkRendererComponent = defineComponent({
     const caret = computed<ComarkElement | null>(() => getCaret(props.caret || false))
 
     return () => {
-      // Render all nodes from the tree value
-      const nodes = toRaw(props.tree.nodes || []) || []
-
-      if (props.streaming && caret.value && nodes.length > 0) {
-        const hasStreamCaret = findLastTextNodeAndAppendNode(nodes[nodes.length - 1] as ComarkElement, caret.value)
-        if (!hasStreamCaret) {
-          nodes.push(caret.value)
-        }
-      }
+      // Clone nodes array to avoid mutating the original tree
+      const nodes = [...(toRaw(props.tree.nodes) || [])]
 
       const children = nodes
         .map((node, index) => renderNode(node, components.value, index, componentManifest))
