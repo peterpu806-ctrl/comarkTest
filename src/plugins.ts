@@ -1,11 +1,11 @@
 /**
  * Comark 插件配置
  */
-import emoji from '../vendor/packages/comark/src/plugins/emoji.ts'
-import highlight from '../vendor/packages/comark/src/plugins/highlight.ts'
-import security from '../vendor/packages/comark/src/plugins/security.ts'
-import summary from '../vendor/packages/comark/src/plugins/summary.ts'
-import toc from '../vendor/packages/comark/src/plugins/toc.ts'
+import emoji from 'comark/plugins/emoji'
+import highlight from 'comark/plugins/highlight'
+import security from 'comark/plugins/security'
+import summary from 'comark/plugins/summary'
+import toc from 'comark/plugins/toc'
 import type { Component } from 'vue'
 
 // Comark 插件列表
