@@ -1,6 +1,9 @@
 <script setup lang="ts">
 /**
  * 流式渲染测试组件
+ *
+ * 测试 Comark 在流式输入时的渲染行为
+ * 观察组件是否会频繁重建导致闪烁
  */
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Comark } from '@comark/vue'
@@ -17,7 +20,7 @@ const customComponents = { XCard }
 // 测试用例列表
 const testCases = [
   {
-    name: '链接渲染测试',
+    name: '链接渲染',
     content: `智能体出错：1 validation error for PromptTemplate
     Value error, Invalid format specifier in f-string template. Nested replacement fields are not allowed.
     For further information visit
@@ -25,14 +28,14 @@ const testCases = [
 `
   },
   {
-    name: '多个XCard闪烁测试',
+    name: '多个XCard',
     content: `::XCard
 ---
 name: card1
 title: 卡片1
 id: id-001
 ---
-这是第一个卡片的内容，包含一些文本。
+这是第一个卡片的内容。
 ::
 
 ::XCard
@@ -116,7 +119,7 @@ onUnmounted(() => {
 
 <template>
   <div class="container">
-    <h1>Comark XCard 流式渲染测试</h1>
+    <h1>Comark 流式渲染测试</h1>
 
     <!-- 控制按钮 -->
     <div class="controls">
@@ -230,9 +233,6 @@ h1 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  :deep(p) {
-    color: #2d2d2d!important;
-  }
 }
 
 .preview {

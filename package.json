@@ -8,11 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@comark/vue": "file:./vendor/packages/comark-vue",
+    "@comark/vue": "^0.2.0",
     "@shikijs/langs": "^4.0.2",
     "@shikijs/primitive": "^4.0.2",
     "@shikijs/themes": "^4.0.2",
-    "comark": "file:./vendor/packages/comark",
+    "comark": "^0.2.0",
     "shiki": "^3.23.0",
     "vue": "^3.4.0"
   },
