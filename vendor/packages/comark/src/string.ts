@@ -1,5 +1,5 @@
 import type { ComarkTree, ComarkElement, ComarkNode } from './ast'
-import type { NodeHandler } from './internal/stringify/types'
+import type { NodeHandler } from './types'
 import { renderFrontmatter } from './internal/front-matter'
 import { stringify } from './internal/stringify'
 
@@ -76,5 +76,5 @@ export interface RenderMarkdownOptions {
  * @returns The markdown string with optional frontmatter
  */
 export function renderMarkdown(tree: ComarkTree, options?: RenderMarkdownOptions): string {
-  return renderFrontmatter(tree.frontmatter, stringify(tree, { format: 'markdown/mdc', ...options }))
+  return renderFrontmatter(tree.frontmatter, stringify(tree, { format: 'markdown/comark', ...options }))
 }

@@ -9,9 +9,9 @@ export interface StringifyOptions {
   blockSeparator: string
 
   /**
-   * @default 'markdown/mdc'
+   * @default 'markdown/comark'
    */
-  format: 'markdown/mdc' | 'markdown/html' | 'text/html'
+  format: 'markdown/comark' | 'markdown/html' | 'text/html' | 'text'
   /**
    * user defined node handlers
    */

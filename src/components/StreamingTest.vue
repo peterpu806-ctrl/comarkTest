@@ -4,68 +4,73 @@
  */
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Comark } from '@comark/vue'
-import { comarkPlugins, comarkComponents } from '../plugins.ts'
+import { comarkPlugins } from '../plugins.ts'
+import XCard from './XCard.vue'
 
 // 流式内容状态
 const content = ref('')
 const isStreaming = ref(false)
 
+// 自定义组件
+const customComponents = { XCard }
+
 // 测试用例列表
 const testCases = [
   {
-    name: '有序列表',
-    content: `|   序号 | 任务名称       | 任务内容                               | 执行智能体     | 任务状态   |
-|-----:|:-----------|:-----------------------------------|:----------|:-------|
-|    0 | 生成ddddd画像 | 为用户xx组织ssas，执行以下步骤：              | 组织fff体 | 未开始    |
-|      |            | 1. 首先查询'xx'相关的所列表，获取名称和 ID  |           |        |
-|      |            | 2. 识别最主要的xx（通常是xx有限公司）       |           |        |
-|      |            | 3. 生成该xxx的详细xxxxx，包括：                  |           |        |
-|      |            |    - 基本信dsffsfffff等 |           |        |
-|      |            |    - 组织架fffffff构关系           |           |        |
-|      |            |    - 业务fffffff业分类           |           |        |
-|      |            |    - 关键fff信息                |           |        |
-|      |            |    - 关联ffff作伙伴                |           |        |
-|      |            |    - 发展fffff和事件                |           |        |
-|      |            |    - 经营fffff场表现（如有）            |           |        |
-|      |            | 4. 以清ffffxxxxx报告          |           |        | 
+    name: '链接渲染测试',
+    content: `智能体出错：1 validation error for PromptTemplate
+    Value error, Invalid format specifier in f-string template. Nested replacement fields are not allowed.
+    For further information visit
+    https://errors.pydantic.dev/2.13/v/value_error
 `
   },
   {
-    name: '混合内容',
-    content: `|   序号 | 任务名称       | 任务内容                               | 执行智能体     | 任务状态   |
-|-----:|:-----------|:-----------------------------------|:----------|:-------|
-|    0 | 生成ddddd画像 | 为用户xx组织ssas，执行以下步骤：              | 组织fff体 | 未开始    |
-|      |            | 1. 首先查询'xx'相关的所列表，获取名称和 ID  |           |        |
-|      |            | 2. 识别最主要的xx（通常是xx有限公司）       |           |        |
-|      |            | 3. 生成该xxx的详细xxxxx，包括：                  |           |        |
-|      |            |    - 基本信dsffsfffff等 |           |        |
-|      |            |    - 组织架fffffff构关系           |           |        |
-|      |            |    - 业务fffffff业分类           |           |        |
-|      |            |    - 关键fff信息                |           |        |
-|      |            |    - 关联ffff作伙伴                |           |        |
-|      |            |    - 发展fffff和事件                |           |        |
-|      |            |    - 经营fffff场表现（如有）            |           |        |
-|      |            | 4. 以清ffffxxxxx报告          |           |        |`
-},
+    name: '多个XCard闪烁测试',
+    content: `::XCard
+---
+name: card1
+title: 卡片1
+id: id-001
+---
+这是第一个卡片的内容，包含一些文本。
+::
+
+::XCard
+---
+name: card2
+title: 卡片2
+id: id-002
+---
+这是第二个卡片的内容。
+::
+
+::XCard
+---
+name: card3
+title: 卡片3
+id: id-003
+---
+这是第三个卡片的内容。
+::
+`
+  },
   {
-    name: '组件测试',
-    content: `::alert{type="info"}
-这是一条提示信息
-::
+    name: '链接 + 文本',
+    content: `这是一个普通的段落文本。
+    https://errors.pydantic.dev/2.13/v/value
+    另一个链接
+    https://errors.pydantic.dev/2.13/v/value_111
 
-::alert{type="warning"}
-这是一条警告信息
-::
-
-> 这是一个引用块`
-  }
+这是另一个段落，在卡片之后。
+`
+  },
 ]
 
 let streamingInterval: ReturnType<typeof setInterval> | null = null
 let currentTestIndex = 0
 
 // 模拟流式输入
-function simulateStreaming(fullContent: string, delayMs: number = 50) {
+function simulateStreaming(fullContent: string, delayMs: number = 30) {
   isStreaming.value = true
   content.value = ''
   let index = 0
@@ -101,7 +106,6 @@ function nextTest() {
 }
 
 onMounted(() => {
-  // 自动开始第一个测试
   setTimeout(() => startTest(0), 500)
 })
 
@@ -112,7 +116,7 @@ onUnmounted(() => {
 
 <template>
   <div class="container">
-    <h1>Comark 流式渲染测试</h1>
+    <h1>Comark XCard 流式渲染测试</h1>
 
     <!-- 控制按钮 -->
     <div class="controls">
@@ -142,6 +146,7 @@ onUnmounted(() => {
             :streaming="true"
             :caret="true"
             :plugins="comarkPlugins"
+            :components="customComponents"
           />
         </div>
         <template #fallback>
@@ -159,114 +164,99 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-@import "./StreamingTest.module.scss";
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-/* GitHub Markdown 样式 */
+h1 {
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: 1px solid #4ec9b0;
+  background: transparent;
+  color: #4ec9b0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: rgba(78, 201, 176, 0.1);
+}
+
+.btn.active {
+  background: #4ec9b0;
+  color: #1e1e1e;
+}
+
+.btn.next {
+  border-color: #569cd6;
+  color: #569cd6;
+}
+
+.btn.next:hover {
+  background: rgba(86, 156, 214, 0.1);
+}
+
+.status {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.render-area {
+  border: 1px solid #3d3d3d;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  min-height: 300px;
+}
+
 .markdown-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.5;
-  word-wrap: break-word;
-  color: #24292f;
-  background-color: #ffffff;
+  line-height: 1.6;
+  :deep(p) {
+    color: #2d2d2d!important;
+  }
 }
 
-.markdown-body :deep(table) {
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin-bottom: 16px;
-  width: 100%;
-  overflow: auto;
-}
-
-.markdown-body :deep(table th),
-.markdown-body :deep(table td) {
-  padding: 6px 13px;
-  border: 1px solid #d0d7de;
-}
-
-.markdown-body :deep(table th) {
-  font-weight: 600;
-  background-color: #f6f8fa;
-}
-
-.markdown-body :deep(table tr:nth-child(2n)) {
-  background-color: #f6f8fa;
-}
-
-.markdown-body :deep(blockquote) {
-  padding: 0 1em;
-  color: #636c76;
-  border-left: 0.25em solid #d0d7de;
-  margin: 0 0 16px 0;
-}
-
-.markdown-body :deep(ol),
-.markdown-body :deep(ul) {
-  padding-left: 2em;
-  margin-bottom: 16px;
-}
-
-.markdown-body :deep(li) {
-  margin-bottom: 4px;
-}
-
-.markdown-body :deep(code) {
-  padding: 0.2em 0.4em;
-  margin: 0;
-  font-size: 85%;
-  background-color: rgba(175, 184, 193, 0.2);
-  border-radius: 6px;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-}
-
-.markdown-body :deep(pre) {
+.preview {
+  border: 1px solid #3d3d3d;
+  border-radius: 8px;
   padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f6f8fa;
-  border-radius: 6px;
-  margin-bottom: 16px;
+  background: #1e1e1e;
 }
 
-.markdown-body :deep(pre code) {
-  padding: 0;
+.preview h3 {
+  color: #569cd6;
+  margin: 0 0 12px 0;
+  font-size: 14px;
+}
+
+.preview pre {
   margin: 0;
-  background-color: transparent;
-  border: 0;
-}
-
-.markdown-body :deep(h1),
-.markdown-body :deep(h2),
-.markdown-body :deep(h3),
-.markdown-body :deep(h4),
-.markdown-body :deep(h5),
-.markdown-body :deep(h6) {
-  margin-top: 24px;
-  margin-bottom: 16px;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.markdown-body :deep(p) {
-  margin-bottom: 16px;
-}
-
-/* alert 组件样式 */
-.markdown-body :deep([class*="alert"]) {
-  padding: 16px;
-  margin-bottom: 16px;
-  border-radius: 6px;
-}
-
-.markdown-body :deep(.alert-info) {
-  background-color: #ddf4ff;
-  border: 1px solid #54aeff;
-}
-
-.markdown-body :deep(.alert-warning) {
-  background-color: #fff8c5;
-  border: 1px solid #bf8700;
+  padding: 12px;
+  background: #2d2d2d;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+  color: #9cdcfe;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 </style>

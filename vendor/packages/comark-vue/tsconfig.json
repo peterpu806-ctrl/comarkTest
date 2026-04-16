@@ -10,9 +10,11 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
