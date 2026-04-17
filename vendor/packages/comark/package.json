@@ -1,0 +1,82 @@
+{
+  "name": "comark",
+  "type": "module",
+  "version": "0.2.1",
+  "description": "Components in Markdown (Comark) parser with streaming support for Vue, React, Svelte and HTML",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comarkdown/comark.git"
+  },
+  "bugs": {
+    "url": "https://github.com/comarkdown/comark/issues"
+  },
+  "homepage": "https://comark.dev",
+  "keywords": [
+    "markdown",
+    "mdc",
+    "parser",
+    "streaming",
+    "vue",
+    "react"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./plugins/*": "./src/plugins/*.ts",
+    "./utils": "./src/utils/index.ts",
+    "./parse": "./src/parse.ts",
+    "./render": "./src/render.ts"
+  },
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "skills"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "stub": "node ../../scripts/stub.mjs",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "prepack": "tsc",
+    "release": "release-it",
+    "release:dry": "release-it --dry-run"
+  },
+  "peerDependencies": {
+    "beautiful-mermaid": "^1.1.3",
+    "katex": "^0.16.33",
+    "shiki": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    },
+    "beautiful-mermaid": {
+      "optional": true
+    },
+    "katex": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/markdown-it": "^14.1.2",
+    "github-slugger": "^2.0.0",
+    "minimark": "0.2.0",
+    "mitata": "^1.0.34",
+    "tsx": "^4.21.0",
+    "vitest": "^4.1.4"
+  },
+  "dependencies": {
+    "@comark/markdown-it": "^0.3.4",
+    "entities": "^4.5.0",
+    "htmlparser2": "^9.1.0",
+    "js-yaml": "^4.1.0",
+    "markdown-exit": "1.0.0-beta.9"
+  }
+}

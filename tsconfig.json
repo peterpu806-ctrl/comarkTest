@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": ["vite/client", "node", "vue"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "comark": ["./vendor/packages/comark/src/index.ts"],
+      "comark/*": ["./vendor/packages/comark/src/*"],
+      "@comark/vue": ["./vendor/packages/comark-vue/src/index.ts"],
+      "@comark/vue/*": ["./vendor/packages/comark-vue/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "vendor/packages/**/*.ts", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
